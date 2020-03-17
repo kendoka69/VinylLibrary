@@ -14,7 +14,7 @@ A console application written in C#, using the .NET framwork and a custom datase
 * determine if an albums is on loan (or return a list of albums on loan ??).
 
 ## Milestones
--[] read from file  
+-[X] read from file  
 
 -[] create Album class  
 
