@@ -49,7 +49,7 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="README.md" />
-    <None Include="VinylLibrary.csv">
+    <None Include="vinylLibrary.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

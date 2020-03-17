@@ -5,6 +5,11 @@ VisualStudioVersion = 15.0.28010.2050
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VinylLibrary", "VinylLibrary.csproj", "{514037CA-2033-4DA2-95DD-9656F0561C10}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{15B377D4-01E8-4D4C-9DDE-478929468E95}"
+	ProjectSection(SolutionItems) = preProject
+		Album.cs = Album.cs
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
