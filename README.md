@@ -3,7 +3,7 @@
 # Vinyl Library
 
 ## Project Summary
-This project will allow the user to access an album collection, add newly aquired albums to the collection, and keep track of albums that have been lent out to friends.
+This project will allow the user to access an album collection, add newly acquired albums to the collection, and keep track of albums that have been lent out to friends.
 
 ## Technical Summary
 A console application written in C#, using the .NET framwork and a custom dataset.
