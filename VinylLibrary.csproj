@@ -50,9 +50,7 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="README.md" />
-    <None Include="vinylLibrary.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <None Include="vinylLibrary.csv" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
