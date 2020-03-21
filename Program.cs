@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using CsvHelper;
+using System.Globalization;
 
 
 namespace VinylLibrary
@@ -16,9 +18,9 @@ namespace VinylLibrary
             string currentDirectory = Directory.GetCurrentDirectory();
             DirectoryInfo directory = new DirectoryInfo(currentDirectory);
             var fileName = Path.Combine(directory.FullName, "VinylLibrary2.csv");
-          
             var albums = ReadAlbumData(fileName);
-            //Console.WriteLine(fileContents);
+
+           // Console.WriteLine(fileContents);
 
             /*Album album = new Album();
             album.AlbumTitle = "So";
@@ -58,7 +60,7 @@ namespace VinylLibrary
                         
 
                 }
-                Console.ReadLine();
+                input = Console.ReadLine();
             }
 
         }
@@ -67,8 +69,25 @@ namespace VinylLibrary
         public static List<Album> ReadAlbumData(string fileName)
         {
             var albumData = new List<Album>();
-            using (var reader = new StreamReader(fileName))
+
+            using (var reader = new StreamReader(@"C:\Users\kendoka69\source\repos\VinylLibrary\bin\Debug\VinylLibrary.csv"))
+            using(var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
             {
+                var records = csv.GetRecords<Album>();
+                
+                csv.Configuration.Delimiter = ",";
+                csv.Configuration.MissingFieldFound = null;
+                while (csv.Read())
+                {
+                    Album Record = csv.GetRecord<Album>();
+                    albumData.Add(Record);
+                }
+            }
+
+
+            //return albumData;
+            /*using (var reader = new StreamReader(fileName))
+            {            
                 string line = "";
                 reader.ReadLine();
                 while ((line = reader.ReadLine()) != null)
@@ -89,7 +108,7 @@ namespace VinylLibrary
 
                     albumData.Add(album);
                 }
-            }
+            }*/
             return albumData;
         }
 

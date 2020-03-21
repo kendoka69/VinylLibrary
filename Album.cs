@@ -8,6 +8,7 @@ namespace VinylLibrary
 {
     public class Album
     {
+        public int IdNum { get; set;  }
         public string ArtistName { get; set; }
         public string AlbumTitle { get; set; }
         public string Genre { get; set; }
@@ -27,7 +28,7 @@ namespace VinylLibrary
 
         public override string ToString()
         {
-            return ArtistName + ", " + AlbumTitle;
+            return AlbumTitle + ", " + ArtistName;
         }
     }
 }
