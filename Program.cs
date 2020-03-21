@@ -16,8 +16,9 @@ namespace VinylLibrary
             string currentDirectory = Directory.GetCurrentDirectory();
             DirectoryInfo directory = new DirectoryInfo(currentDirectory);
             var fileName = Path.Combine(directory.FullName, "VinylLibrary2.csv");
+          
             var albums = ReadAlbumData(fileName);
-           // Console.WriteLine(fileContents);
+            //Console.WriteLine(fileContents);
 
             /*Album album = new Album();
             album.AlbumTitle = "So";
@@ -57,8 +58,8 @@ namespace VinylLibrary
                         
 
                 }
+                Console.ReadLine();
             }
-
 
         }
 
