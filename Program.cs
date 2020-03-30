@@ -17,12 +17,12 @@ namespace VinylLibrary
             //Find the file
             string currentDirectory = Directory.GetCurrentDirectory();
             DirectoryInfo directory = new DirectoryInfo(currentDirectory);
-            var fileName = Path.Combine(directory.FullName, "VinylLibrary2.csv");
+            var fileName = Path.Combine(directory.FullName, "VinylLibrary.csv");
             var albums = ReadAlbumData(fileName);
 
            // Console.WriteLine(fileContents);
 
-            /*Album album = new Album();
+           /* Album album = new Album();
             album.AlbumTitle = "So";
             album.ArtistName = "Peter Gabriel";
             album.Genre = "progressive pop";
@@ -37,8 +37,9 @@ namespace VinylLibrary
             menu.Append("\nWelcome to the Vinyl Library");
             menu.Append("\n----------------------------");
             menu.Append("\nTo see the entire collection, enter 1.");
-            menu.Append("\nTo sort albums by artist, press 2");
-            menu.Append("\nTo sort albums by title, press 3");
+            menu.Append("\nTo add an album, enter 2");
+            menu.Append("\nTo remove an album, enter 3");
+            menu.Append("\nTo check out an album, enter 4");
             menu.Append("\n----------------------------");
             menu.Append("\nEnter Q to quit");
 
@@ -49,20 +50,45 @@ namespace VinylLibrary
             while (input.ToLower() != "q")
             {
                 switch (input)
-                {
-                    case "1":
+                {   
+                    //Retrieve entire collection
+                    case "1": 
                         PrintList(fileContents);
-                        Console.WriteLine(fileContents);
+                        //Console.WriteLine(fileContents);
                         Console.WriteLine(menu.ToString());
+                        break;
+                    
+                    //Add an album        
+                    case "2":
+                        Console.WriteLine("Please enter an album title: ");
+                        Console.ReadLine();
+                        Console.WriteLine("Please enter the artist's name: ");
+                        Console.ReadLine();
+                        Console.WriteLine("Please enter the album's genre: ");
+                        Console.ReadLine();
+                        Console.WriteLine("Please enter the year the album was released: ");
+                        Console.ReadLine();
 
                         break;
-                    //case "2":
-                        
+
+                    //Remove an album,
+                    case "3":
+                        Console.WriteLine("Which album would you like to\n\rremove from the collection?");
+                        Console.WriteLine("Please enter the album name: ");
+                        Console.ReadLine();
+                        break;
+
+                    //Borrow an album
+                    case "4":
+                        Console.WriteLine("Which album would you like to borrow?");
+                        Console.WriteLine("Please enter the album name: ");
+                        Console.ReadLine();
+                        break;    
 
                 }
                 input = Console.ReadLine();
             }
-
+             
         }
 
         //Read from the file
@@ -70,23 +96,22 @@ namespace VinylLibrary
         {
             var albumData = new List<Album>();
 
-            using (var reader = new StreamReader(@"C:\Users\kendoka69\source\repos\VinylLibrary\bin\Debug\VinylLibrary.csv"))
+            using (var reader = new StreamReader(fileName))
             using(var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
             {
-                var records = csv.GetRecords<Album>();
-                
+
                 csv.Configuration.Delimiter = ",";
                 csv.Configuration.MissingFieldFound = null;
                 while (csv.Read())
                 {
-                    Album Record = csv.GetRecord<Album>();
-                    albumData.Add(Record);
+                    var album = csv.GetRecord<Album>();
+                    albumData.Add(album);
                 }
             }
 
 
             //return albumData;
-            /*using (var reader = new StreamReader(fileName))
+            using (var reader = new StreamReader(fileName))
             {            
                 string line = "";
                 reader.ReadLine();
@@ -94,21 +119,9 @@ namespace VinylLibrary
                 {
                     Album album = new Album();
                     string[] value = line.Split(',');
-
-                    int parseInt;
-                    if (int.TryParse(value[4], out parseInt))
-                    {
-                        album.YearReleased = parseInt;
-                    }
-                    album.ArtistName = value[1];
-                    album.AlbumTitle = value[2];
-                    album.Genre = value[3];
-                    //album.OnLoan = value[5];
-                    album.Borrower = value[6];
-
-                    albumData.Add(album);
+                 
                 }
-            }*/
+            }
             return albumData;
         }
 
@@ -133,5 +146,7 @@ namespace VinylLibrary
                 Console.WriteLine(album.ToString());
             }
         }
+
+        
     }
 }

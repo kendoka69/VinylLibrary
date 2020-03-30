@@ -16,9 +16,9 @@ A console application written in C#, using the .NET framwork and a custom datase
 ## Milestones
 -[X] read from file  
 
--[] create Album class  
+-[X] create Album class  
 
--[] create menu to access and input data  
+-[X] create menu to access and input data  
 
 -[] create database or a way to store added albums  
 

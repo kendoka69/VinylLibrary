@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace VinylLibrary
 {
+    
     public class Album
-    {
+    {  
+
         public int IdNum { get; set;  }
         public string ArtistName { get; set; }
         public string AlbumTitle { get; set; }
@@ -15,20 +17,17 @@ namespace VinylLibrary
         public int YearReleased { get; set; }
         public bool OnLoan { get; set; }
         public string Borrower { get; set; }
+        public List<Album> Albums;
 
-        /*public Album(string ArtistName, string AlbumTitle, string Genre, int YearReleased, bool OnLoan, string Borrower)
+        public Album()
         {
-            this.ArtistName = ArtistName;
-        }*/
-
-        /*public Album()
-        { 
-            
-        }*/
+            Albums = new List<Album>();
+        }
+        
 
         public override string ToString()
         {
-            return AlbumTitle + ", " + ArtistName;
+            return AlbumTitle + ", " + ArtistName + " " + Genre + " " + YearReleased + " " + OnLoan + " "  + Borrower;
         }
     }
 }
