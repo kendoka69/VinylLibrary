@@ -23,11 +23,12 @@ namespace VinylLibrary
         {
             Albums = new List<Album>();
         }
+
         
 
         public override string ToString()
         {
-            return AlbumTitle + ", " + ArtistName + " " + Genre + " " + YearReleased + " " + OnLoan + " "  + Borrower;
+            return AlbumTitle + ", " + ArtistName + ", " + Genre + ", " + YearReleased + ", " + OnLoan + ", " + Borrower;
         }
     }
 }
