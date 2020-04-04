@@ -21,7 +21,7 @@ namespace VinylLibrary
             var fileName = Path.Combine(directory.FullName, "VinylLibrary.csv");
             var albums = ReadAlbumData(fileName);
 
-            // Console.WriteLine(fileContents);
+             Console.WriteLine(fileName);
 
             /* Album album = new Album();
              album.AlbumTitle = "So";
@@ -52,10 +52,11 @@ namespace VinylLibrary
             {
                 switch (input)
                 {
+
                     //Retrieve entire collection
                     case "1":
                         PrintList(fileContents);
-                        //Console.WriteLine(fileContents);
+                       // Console.WriteLine(fileContents);
                         Console.WriteLine(menu.ToString());
                         break;
 
@@ -72,7 +73,7 @@ namespace VinylLibrary
                         album.YearReleased = Convert.ToInt32(Console.ReadLine());
                         Console.ReadLine();
 
-                        AddAlbum(fileContents);
+                        AddAlbum(album, "VinylLibrary.csv");
 
                         Console.ReadLine();
                         
@@ -135,19 +136,19 @@ namespace VinylLibrary
         }
 
 
-        private static void AddAlbum(List<Album>album)
+        private static void AddAlbum(Album album, string filepath) 
         {
             string currentDirectory = Directory.GetCurrentDirectory();
             DirectoryInfo directory = new DirectoryInfo(currentDirectory);
             var fileName = Path.Combine(directory.FullName, "VinylLibrary.csv");
-           // var album = new List<Album>();
-            using (
-                StreamWriter sw = File.AppendText(fileName))
+           
+            //using (StreamWriter sw = File.AppendText(fileName))
+            using (StreamWriter file = new StreamWriter(@filepath, true))
             {
-                sw.WriteLine(album);
+                file.WriteLine(album);
 
             }
-
+            
             // Open the file to read from.
             using (StreamReader sr = File.OpenText(fileName))
             {

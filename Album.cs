@@ -2,15 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace VinylLibrary
 {
     
     public class Album
-    {  
-
-        public int IdNum { get; set;  }
+    {
+        public int IdNum { get; private set; } = Interlocked.Increment(ref GlobalAlbumId);
+        public static int GlobalAlbumId;
         public string ArtistName { get; set; }
         public string AlbumTitle { get; set; }
         public string Genre { get; set; }
@@ -28,7 +29,7 @@ namespace VinylLibrary
 
         public override string ToString()
         {
-            return AlbumTitle + ", " + ArtistName + ", " + Genre + ", " + YearReleased + ", " + OnLoan + ", " + Borrower;
+            return IdNum + "," + AlbumTitle + ", " + ArtistName + ", " + Genre + ", " + YearReleased + ", " + OnLoan + ", " + Borrower;
         }
     }
 }
