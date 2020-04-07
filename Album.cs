@@ -29,7 +29,7 @@ namespace VinylLibrary
 
         public override string ToString()
         {
-            return IdNum + "," + AlbumTitle + ", " + ArtistName + ", " + Genre + ", " + YearReleased + ", " + OnLoan + ", " + Borrower;
+            return IdNum + "," + AlbumTitle + "," + ArtistName + "," + Genre + "," + YearReleased + "," + OnLoan + "," + Borrower;
         }
     }
 }

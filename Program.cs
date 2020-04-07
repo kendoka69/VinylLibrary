@@ -21,7 +21,7 @@ namespace VinylLibrary
             var fileName = Path.Combine(directory.FullName, "VinylLibrary.csv");
             var albums = ReadAlbumData(fileName);
 
-             Console.WriteLine(fileName);
+            //Console.WriteLine(fileName);
 
             /* Album album = new Album();
              album.AlbumTitle = "So";
@@ -76,7 +76,6 @@ namespace VinylLibrary
                         AddAlbum(album, "VinylLibrary.csv");
 
                         Console.ReadLine();
-                        
                         break;
 
                     //Remove an album,
@@ -115,7 +114,7 @@ namespace VinylLibrary
                 {
                     var album = csv.GetRecord<Album>();
                     albumData.Add(album);
-                    Console.WriteLine(album);
+                    //Console.WriteLine(album);
                 }
             }
 
@@ -129,26 +128,22 @@ namespace VinylLibrary
                 {
                     Album album = new Album();
                     string[] value = line.Split(',');
-
                 }
             }
             return albumData;
         }
-
 
         private static void AddAlbum(Album album, string filepath) 
         {
             string currentDirectory = Directory.GetCurrentDirectory();
             DirectoryInfo directory = new DirectoryInfo(currentDirectory);
             var fileName = Path.Combine(directory.FullName, "VinylLibrary.csv");
-           
-            //using (StreamWriter sw = File.AppendText(fileName))
+
             using (StreamWriter file = new StreamWriter(@filepath, true))
             {
                 file.WriteLine(album);
-
             }
-            
+
             // Open the file to read from.
             using (StreamReader sr = File.OpenText(fileName))
             {
@@ -159,24 +154,6 @@ namespace VinylLibrary
                 }
             }
         }
-
-        //Write to file (will need to add data values)
-        //private static void WriteAlbumData(List<Album> fileContents)
-        //{
-
-        //    string currentDirectory = Directory.GetCurrentDirectory();
-        //    DirectoryInfo directory = new DirectoryInfo(currentDirectory);
-        //    var fileName = Path.Combine(directory.FullName, "VinylLibrary.csv");
-
-        //    using (var writer = File.AppendText(fileName))
-        //    {
-        //        writer.WriteLine("ArtistName, AlbumTitle, Genre, YearReleased");
-        //        foreach (var item in fileContents)
-        //        {
-        //            writer.WriteLine(item.ArtistName + "," + item.AlbumTitle + "," + item.Genre + "," + item.YearReleased);
-        //        }
-        //    }
-        //}
 
         private static void PrintList(List<Album> albums)
         {
