@@ -56,7 +56,7 @@ namespace VinylLibrary
                     //Retrieve entire collection
                     case "1":
                         PrintList(fileContents);
-                       // Console.WriteLine(fileContents);
+                        // Console.WriteLine(fileContents);
                         Console.WriteLine(menu.ToString());
                         break;
 
@@ -71,10 +71,10 @@ namespace VinylLibrary
                         album.Genre = Console.ReadLine();
                         Console.WriteLine("Please enter the year the album was released: ");
                         album.YearReleased = Convert.ToInt32(Console.ReadLine());
-                        Console.ReadLine();
+                        //Console.ReadLine();
 
                         AddAlbum(album, "VinylLibrary.csv");
-
+                        Console.WriteLine(menu.ToString());
                         Console.ReadLine();
                         break;
 
@@ -91,7 +91,7 @@ namespace VinylLibrary
                         Console.WriteLine("Please enter the album name: ");
                         Console.ReadLine();
                         break;
-                            
+
                 }
                 input = Console.ReadLine();
 
@@ -133,7 +133,7 @@ namespace VinylLibrary
             return albumData;
         }
 
-        private static void AddAlbum(Album album, string filepath) 
+        private static void AddAlbum(Album album, string filepath)
         {
             string currentDirectory = Directory.GetCurrentDirectory();
             DirectoryInfo directory = new DirectoryInfo(currentDirectory);

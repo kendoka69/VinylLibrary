@@ -20,6 +20,8 @@ A console application written in C#, using the .NET framwork and a custom datase
 
 -[X] create menu to access and input data  
 
--[] create database or a way to store added albums  
+-[X] create method to add an album to collection
+
+-[] create method to remove an album from the collection
 
 -[] **Bonus:** create feature that allows borrowed albums to be tracked, ie. edit data to show if an album has been "check out" and who borrowed it.
