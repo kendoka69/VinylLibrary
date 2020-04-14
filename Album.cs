@@ -8,10 +8,8 @@ using System.Threading.Tasks;
 namespace VinylLibrary
 {
     
-    public class Album
+    public class Album 
     {
-        public int IdNum { get; private set; } = Interlocked.Increment(ref GlobalAlbumId);
-        public static int GlobalAlbumId;
         public string ArtistName { get; set; }
         public string AlbumTitle { get; set; }
         public string Genre { get; set; }
@@ -29,7 +27,7 @@ namespace VinylLibrary
 
         public override string ToString()
         {
-            return IdNum + "," + ArtistName + "," + AlbumTitle + "," + Genre + "," + YearReleased + "," + OnLoan + "," + Borrower;
+            return  ArtistName + "," + AlbumTitle + "," + Genre + "," + YearReleased + "," + OnLoan + "," + Borrower;
         }
     }
 }
