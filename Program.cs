@@ -7,6 +7,8 @@ using System.IO;
 using CsvHelper;
 using System.Globalization;
 using System.Runtime.CompilerServices;
+using System.Security.Cryptography.X509Certificates;
+using System.Threading;
 
 
 namespace VinylLibrary
@@ -55,8 +57,7 @@ namespace VinylLibrary
 
                     //Retrieve entire collection
                     case "1":
-                        PrintList(fileContents);
-                        // Console.WriteLine(fileContents);
+                        PrintList(albums);
                         Console.WriteLine(menu.ToString());
                         break;
 
@@ -100,59 +101,59 @@ namespace VinylLibrary
         }
 
         //Read from the file
-        public static List<Album> ReadAlbumData(string fileName)
+        public static List<Album> ReadAlbumData(string filepath)
         {
             var albumData = new List<Album>();
 
-            using (var reader = new StreamReader(fileName))
-            using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
-            {
-
-                csv.Configuration.Delimiter = ",";
-                csv.Configuration.MissingFieldFound = null;
-                while (csv.Read())
-                {
-                    var album = csv.GetRecord<Album>();
-                    albumData.Add(album);
-                    //Console.WriteLine(album);
-                }
-            }
-
-
             //return albumData;
-            using (var reader = new StreamReader(fileName))
+            using (var reader = new StreamReader(filepath))
             {
+                string headerLine = reader.ReadLine();
                 string line = "";
-                reader.ReadLine();
                 while ((line = reader.ReadLine()) != null)
                 {
                     Album album = new Album();
                     string[] value = line.Split(',');
+                    int parseInt;
+                    bool parseBool;
+                    
+                    album.AlbumTitle = value[0];
+                    album.ArtistName = value[1]; 
+                    album.Genre = value[2];
+
+                    if (int.TryParse(value[3], out parseInt))
+                    {
+                        album.YearReleased = parseInt;
+                    }
+                    if (bool.TryParse(value[4], out parseBool))
+                    {
+                        album.OnLoan = parseBool;
+                    }
+
+                    album.Borrower = value[5];
+                    albumData.Add(album);
                 }
             }
             return albumData;
+
         }
+        
+
 
         private static void AddAlbum(Album album, string filepath)
         {
             string currentDirectory = Directory.GetCurrentDirectory();
             DirectoryInfo directory = new DirectoryInfo(currentDirectory);
             var fileName = Path.Combine(directory.FullName, "VinylLibrary.csv");
-
-            using (StreamWriter file = new StreamWriter(@filepath, true))
+            
+            using (StreamWriter writer = new StreamWriter(@filepath, true))
             {
-                file.WriteLine(album);
+                
+                writer.WriteLine(album.ArtistName + "," + album.AlbumTitle + "," + album.Genre + "," + album.YearReleased.ToString() + "," + album.OnLoan.ToString() + "," + album.Borrower);
+                
+                
             }
 
-            // Open the file to read from.
-            using (StreamReader sr = File.OpenText(fileName))
-            {
-                string s = "";
-                while ((s = sr.ReadLine()) != null)
-                {
-                    Console.WriteLine(s);
-                }
-            }
         }
 
         private static void PrintList(List<Album> albums)
