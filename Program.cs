@@ -4,12 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
-using CsvHelper;
-using System.Globalization;
-using System.Runtime.CompilerServices;
-using System.Security.Cryptography.X509Certificates;
-using System.Threading;
-
 
 namespace VinylLibrary
 {
@@ -57,7 +51,7 @@ namespace VinylLibrary
 
                     //Retrieve entire collection
                     case "1":
-                        PrintList(albums);
+                        PrintList(fileContents);
                         Console.WriteLine(menu.ToString());
                         break;
 
@@ -131,7 +125,7 @@ namespace VinylLibrary
                     }
 
                     album.Borrower = value[5];
-                    albumData.Add(album);
+                    
                 }
             }
             return albumData;
