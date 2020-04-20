@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using CsvHelper;
+using System.Globalization;
+using System.Runtime.CompilerServices;
 
 namespace VinylLibrary
 {
@@ -67,7 +70,7 @@ namespace VinylLibrary
                         Console.WriteLine("Please enter the year the album was released: ");
                         album.YearReleased = Convert.ToInt32(Console.ReadLine());
                         //Console.ReadLine();
-
+                        
                         AddAlbum(album, "VinylLibrary.csv");
                         Console.WriteLine(menu.ToString());
                         Console.ReadLine();
@@ -101,37 +104,52 @@ namespace VinylLibrary
 
             //return albumData;
             using (var reader = new StreamReader(filepath))
+            using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
             {
-                string headerLine = reader.ReadLine();
-                string line = "";
-                while ((line = reader.ReadLine()) != null)
+                csv.Configuration.Delimiter = ",";
+                csv.Configuration.MissingFieldFound = null;
+                
+                while (csv.Read())
                 {
-                    Album album = new Album();
-                    string[] value = line.Split(',');
-                    int parseInt;
-                    bool parseBool;
-                    
-                    album.AlbumTitle = value[0];
-                    album.ArtistName = value[1]; 
-                    album.Genre = value[2];
+                    //string line = "";
+                    var album = csv.GetRecord<Album>();
 
-                    if (int.TryParse(value[3], out parseInt))
-                    {
-                        album.YearReleased = parseInt;
-                    }
-                    if (bool.TryParse(value[4], out parseBool))
-                    {
-                        album.OnLoan = parseBool;
-                    }
-
-                    album.Borrower = value[5];
-                    
+                    albumData.Add(album);
                 }
             }
+
+            //using (var reader = new StreamReader(filepath))
+            //{
+            //    string line = "";
+            //    reader.ReadLine();
+            //    while ((line = reader.ReadLine()) != null)
+            //    {
+            //        Album album = new Album();
+            //        string[] value = line.Split(',');
+                    
+            //        int parseInt;
+            //        bool parseBool;
+
+            //        album.ArtistName = value[0];
+            //        album.AlbumTitle = value[1];
+            //        album.Genre = value[2];
+
+            //        if (int.TryParse(value[3], out parseInt))
+            //        {
+            //            album.YearReleased = parseInt;
+            //        }
+            //        if (bool.TryParse(value[4], out parseBool))
+            //        {
+            //            album.OnLoan = parseBool;
+            //        }
+
+            //        album.Borrower = value[5];
+            //    }
+            //}
             return albumData;
 
         }
-        
+
 
 
         private static void AddAlbum(Album album, string filepath)
@@ -139,13 +157,11 @@ namespace VinylLibrary
             string currentDirectory = Directory.GetCurrentDirectory();
             DirectoryInfo directory = new DirectoryInfo(currentDirectory);
             var fileName = Path.Combine(directory.FullName, "VinylLibrary.csv");
-            
+
             using (StreamWriter writer = new StreamWriter(@filepath, true))
             {
-                
+
                 writer.WriteLine(album.ArtistName + "," + album.AlbumTitle + "," + album.Genre + "," + album.YearReleased.ToString() + "," + album.OnLoan.ToString() + "," + album.Borrower);
-                
-                
             }
 
         }
