@@ -20,10 +20,8 @@ namespace VinylLibrary
 
         public Album()
         {
-            Albums = new List<Album>();
+           Albums = new List<Album>();
         }
-
-        
 
         public override string ToString()
         {
