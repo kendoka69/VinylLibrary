@@ -20,17 +20,6 @@ namespace VinylLibrary
             var fileName = Path.Combine(directory.FullName, "VinylLibrary.csv");
             var albums = ReadAlbumData(fileName);
 
-            //Console.WriteLine(fileName);
-
-            /* Album album = new Album();
-             album.AlbumTitle = "So";
-             album.ArtistName = "Peter Gabriel";
-             album.Genre = "progressive pop";
-             album.YearReleased = 1986;
-             album.OnLoan = false;
-             album.Borrower = "";
-             Console.WriteLine(album.AlbumTitle);*/
-
             StringBuilder menu = new StringBuilder();
             menu.Append("\n");
             menu.Append("\n");
@@ -45,7 +34,6 @@ namespace VinylLibrary
 
             Console.WriteLine(menu.ToString());
 
-            var fileContents = albums;
             var input = Console.ReadLine();
             while (input.ToLower() != "q")
             {
@@ -54,7 +42,7 @@ namespace VinylLibrary
 
                     //Retrieve entire collection
                     case "1":
-                        PrintList(fileContents);
+                        PrintList(albums);
                         Console.WriteLine(menu.ToString());
                         break;
 
@@ -70,29 +58,26 @@ namespace VinylLibrary
                         Console.WriteLine("Please enter the year the album was released: ");
                         album.YearReleased = Convert.ToInt32(Console.ReadLine());
                         //Console.ReadLine();
-                        
+
                         AddAlbum(album, "VinylLibrary.csv");
+                        albums = ReadAlbumData(fileName);
                         Console.WriteLine(menu.ToString());
-                        Console.ReadLine();
                         break;
 
                     //Remove an album,
                     case "3":
                         Console.WriteLine("Which album would you like to\n\rremove from the collection?");
                         Console.WriteLine("Please enter the album name: ");
-                        Console.ReadLine();
                         break;
 
                     //Borrow an album
                     case "4":
                         Console.WriteLine("Which album would you like to borrow?");
                         Console.WriteLine("Please enter the album name: ");
-                        Console.ReadLine();
                         break;
-
                 }
-                input = Console.ReadLine();
 
+                input = Console.ReadLine();
             }
 
         }
@@ -108,7 +93,7 @@ namespace VinylLibrary
             {
                 csv.Configuration.Delimiter = ",";
                 csv.Configuration.MissingFieldFound = null;
-                
+
                 while (csv.Read())
                 {
                     //string line = "";
@@ -118,39 +103,9 @@ namespace VinylLibrary
                 }
             }
 
-            //using (var reader = new StreamReader(filepath))
-            //{
-            //    string line = "";
-            //    reader.ReadLine();
-            //    while ((line = reader.ReadLine()) != null)
-            //    {
-            //        Album album = new Album();
-            //        string[] value = line.Split(',');
-                    
-            //        int parseInt;
-            //        bool parseBool;
-
-            //        album.ArtistName = value[0];
-            //        album.AlbumTitle = value[1];
-            //        album.Genre = value[2];
-
-            //        if (int.TryParse(value[3], out parseInt))
-            //        {
-            //            album.YearReleased = parseInt;
-            //        }
-            //        if (bool.TryParse(value[4], out parseBool))
-            //        {
-            //            album.OnLoan = parseBool;
-            //        }
-
-            //        album.Borrower = value[5];
-            //    }
-            //}
             return albumData;
 
         }
-
-
 
         private static void AddAlbum(Album album, string filepath)
         {
