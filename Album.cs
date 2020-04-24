@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.AccessControl;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -10,8 +11,8 @@ namespace VinylLibrary
 
     public class Album
     {
-        public int ID { get; private set; } = Interlocked.Increment(ref GlobalAlbumId);
-        public static int GlobalAlbumId;
+        private static int _Counter;
+        public int ID { get; set; }
         public string ArtistName { get; set; }
         public string AlbumTitle { get; set; }
         public string Genre { get; set; }
@@ -22,7 +23,8 @@ namespace VinylLibrary
 
         public Album()
         {
-           Albums = new List<Album>();
+            Albums = new List<Album>();
+            this.ID = Interlocked.Increment(ref _Counter);
         }
 
         public override string ToString()
