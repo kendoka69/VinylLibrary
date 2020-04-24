@@ -18,7 +18,8 @@ namespace VinylLibrary
             string currentDirectory = Directory.GetCurrentDirectory();
             DirectoryInfo directory = new DirectoryInfo(currentDirectory);
             var fileName = Path.Combine(directory.FullName, "VinylLibrary.csv");
-            var albums = ReadAlbumData(fileName);
+            var albumsRead = ReadAlbumData(fileName);
+            List<Album> albums = new List<Album>();
 
             StringBuilder menu = new StringBuilder();
             menu.Append("\n");
@@ -39,10 +40,10 @@ namespace VinylLibrary
             {
                 switch (input)
                 {
-
+                    
                     //Retrieve entire collection
                     case "1":
-                        PrintList(albums);
+                        PrintList(albumsRead);
                         Console.WriteLine(menu.ToString());
                         break;
 
@@ -57,19 +58,27 @@ namespace VinylLibrary
                         album.Genre = Console.ReadLine();
                         Console.WriteLine("Please enter the year the album was released: ");
                         album.YearReleased = Convert.ToInt32(Console.ReadLine());
-                        //Console.ReadLine();
 
                         AddAlbum(album, "VinylLibrary.csv");
                         albums = ReadAlbumData(fileName);
+                        PrintList(albumsRead);
                         Console.WriteLine(menu.ToString());
                         break;
 
-                    //Remove an album,
+                    //Remove an album
                     case "3":
-                        Console.WriteLine("Which album would you like to\n\rremove from the collection?");
-                        Console.WriteLine("Please enter the album name: ");
+                        Console.WriteLine("\n\r");
+                        PrintList(albumsRead);
+                        Console.WriteLine("\n\r");
+                        Console.WriteLine("Which album would you like to\n\r" +
+                                          "remove from the collection?\n\r" +
+                                          "Please enter the ID number of the album: ");
+                        int idInput = Convert.ToInt32(Console.ReadLine()); 
+                        albums = ReadAlbumData(fileName);
+                        var albumToRemove = albums.Find(x => x.ID == idInput);
+                        albums.Remove(albumToRemove);
                         break;
-
+                        
                     //Borrow an album
                     case "4":
                         Console.WriteLine("Which album would you like to borrow?");
@@ -93,12 +102,12 @@ namespace VinylLibrary
             {
                 csv.Configuration.Delimiter = ",";
                 csv.Configuration.MissingFieldFound = null;
+                csv.Configuration.HasHeaderRecord = true;
 
                 while (csv.Read())
                 {
                     //string line = "";
                     var album = csv.GetRecord<Album>();
-
                     albumData.Add(album);
                 }
             }
@@ -116,7 +125,14 @@ namespace VinylLibrary
             using (StreamWriter writer = new StreamWriter(@filepath, true))
             {
 
-                writer.WriteLine(album.ArtistName + "," + album.AlbumTitle + "," + album.Genre + "," + album.YearReleased.ToString() + "," + album.OnLoan.ToString() + "," + album.Borrower);
+                writer.WriteLine(
+                    album.ID + "," + 
+                    album.ArtistName + "," +
+                    album.AlbumTitle + "," +
+                    album.Genre + "," + 
+                    album.YearReleased.ToString() + "," + 
+                    album.OnLoan.ToString() + "," + 
+                    album.Borrower);
             }
 
         }
