@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.IO;
 using CsvHelper;
 using System.Globalization;
-using System.Runtime.CompilerServices;
+
 
 namespace VinylLibrary
 {
@@ -19,7 +18,6 @@ namespace VinylLibrary
             DirectoryInfo directory = new DirectoryInfo(currentDirectory);
             var fileName = Path.Combine(directory.FullName, "VinylLibrary.csv");
             var albumsRead = ReadAlbumData(fileName);
-            List<Album> albums = new List<Album>();
 
             StringBuilder menu = new StringBuilder();
             menu.Append("\n");
@@ -58,31 +56,31 @@ namespace VinylLibrary
                         album.Genre = Console.ReadLine();
                         Console.WriteLine("Please enter the year the album was released: ");
                         album.YearReleased = Convert.ToInt32(Console.ReadLine());
-
                         AddAlbum(album, "VinylLibrary.csv");
-                        albums = ReadAlbumData(fileName);
-                        PrintList(albumsRead);
                         Console.WriteLine(menu.ToString());
                         break;
 
                     //Remove an album
                     case "3":
+                    
                         Console.WriteLine("\n\r");
                         PrintList(albumsRead);
                         Console.WriteLine("\n\r");
                         Console.WriteLine("Which album would you like to\n\r" +
                                           "remove from the collection?\n\r" +
                                           "Please enter the ID number of the album: ");
-                        int idInput = Convert.ToInt32(Console.ReadLine()); 
-                        albums = ReadAlbumData(fileName);
-                        var albumToRemove = albums.Find(x => x.ID == idInput);
-                        albums.Remove(albumToRemove);
+                        var albumRemoveId = Convert.ToInt32(Console.ReadLine());
+                        RemoveAlbum(albumRemoveId);
                         break;
                         
                     //Borrow an album
                     case "4":
+
+                        Console.WriteLine("\n\r");
+                        PrintList(albumsRead);
                         Console.WriteLine("Which album would you like to borrow?");
                         Console.WriteLine("Please enter the album name: ");
+                        var albumBorrowId = Convert.ToInt32(Console.ReadLine());
                         break;
                 }
 
@@ -96,46 +94,67 @@ namespace VinylLibrary
         {
             var albumData = new List<Album>();
 
-            //return albumData;
             using (var reader = new StreamReader(filepath))
             using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
             {
-                csv.Configuration.Delimiter = ",";
-                csv.Configuration.MissingFieldFound = null;
-                csv.Configuration.HasHeaderRecord = true;
-
-                while (csv.Read())
-                {
-                    //string line = "";
-                    var album = csv.GetRecord<Album>();
-                    albumData.Add(album);
-                }
+                albumData = csv.GetRecords<Album>().ToList();
             }
 
             return albumData;
-
         }
-
+        
+        //Write added album to the file
         private static void AddAlbum(Album album, string filepath)
         {
-            string currentDirectory = Directory.GetCurrentDirectory();
-            DirectoryInfo directory = new DirectoryInfo(currentDirectory);
-            var fileName = Path.Combine(directory.FullName, "VinylLibrary.csv");
-
             using (StreamWriter writer = new StreamWriter(@filepath, true))
             {
-
-                writer.WriteLine(
-                    album.ID + "," + 
-                    album.ArtistName + "," +
-                    album.AlbumTitle + "," +
-                    album.Genre + "," + 
-                    album.YearReleased.ToString() + "," + 
-                    album.OnLoan.ToString() + "," + 
-                    album.Borrower);
+                //writer.WriteLine(Environment.NewLine);
+                writer.Write($"\n{album.ID},{album.ArtistName},{album.AlbumTitle},{album.Genre},{album.YearReleased},{album.OnLoan},{album.Borrower}");               
             }
+        }
+
+        //Remove an album from the file
+        private static void RemoveAlbum(int idToRemove)
+        {
+           List<string> lines = new List<string>();
+           string line;
+           StreamReader file = new StreamReader("VinylLibrary.csv");
+
+           while ((line = file.ReadLine()) != null)
+           {
+               lines.Add(line);
+           }
+
+           lines.Remove(idToRemove.ToString());
+           
+
+           //List<string> albumsRead = File.ReadAllLines(filepath).ToList();
+           //string albumToRemove = albumsRead[0];
+           //albumsRead.Remove(idInput.ToString());
+           //File.WriteAllLines(filepath, albumsRead.ToArray());
+
+           // File.Move(tempFile, "VinylLibrary.csv");
+           //List<Album> Album = new List<Album>();
+           //var item = Album.SingleOrDefault(x => x.ID == idInput);
+           //if (item != null)
+           //    Album.Remove(item);
+
+           //for (int i = Album.Count - 1; i >= 0; i--)
+           //{
+           //    if (Album[i].ID == idInput)
+           //    {
+           //        Album.RemoveAt(i);
+           //    }
+           //}
+           //using (StreamWriter writer = new StreamWriter(@"C:\Test\test.CSV", false))
+           //{
+           //    foreach (String ablum in album)
+           //        writer.WriteLine(album);
+           //}
 
         }
+
+        //Borrow an album
 
         private static void PrintList(List<Album> albums)
         {
@@ -144,7 +163,5 @@ namespace VinylLibrary
                 Console.WriteLine(album.ToString());
             }
         }
-
-
     }
 }
