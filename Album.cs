@@ -11,8 +11,8 @@ namespace VinylLibrary
 
     public class Album
     {
-        private static int _counter;
-        public int ID { get; } = Interlocked.Increment(ref _counter);
+        //private static int _counter;
+        //public int ID { get; } = Interlocked.Increment(ref _counter);
         public string ArtistName { get; set; }
         public string AlbumTitle { get; set; }
         public string Genre { get; set; }
@@ -22,7 +22,7 @@ namespace VinylLibrary
         
         public override string ToString()
         {
-            return $"{ID},{AlbumTitle},{ArtistName},{Genre},{YearReleased},{OnLoan},{Borrower}";
+            return $"{AlbumTitle},{ArtistName},{Genre},{YearReleased},{OnLoan},{Borrower}";
         }
     }
 }
