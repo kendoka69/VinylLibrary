@@ -9,19 +9,19 @@ This project will allow the user to access an album collection, add newly acquir
 A console application written in C#, using the .NET framwork and a custom dataset.
 
 ## Features
-* enter albums into the library
+* add albums into the library
 * remove albums from the library
-* determine if an albums is on loan (or return a list of albums on loan ??).
+* check out an album
 
 ## Milestones
 -[X] read from file  
 
 -[X] create Album class  
 
--[X] create menu to access and input data  
+-[X] create menu to access input data  
 
 -[X] create method to add an album to collection
 
--[] create method to remove an album from the collection
+-[X] create method to remove an album from the collection
 
--[] **Bonus:** create feature that allows borrowed albums to be tracked, ie. edit data to show if an album has been "check out" and who borrowed it.
+-[X] **Bonus:** create feature that allows borrowed albums to be tracked, ie. edit data to show if an album has been "check out" and who borrowed it.
