@@ -1,3 +1,5 @@
-ArtistName,AlbumTitle,Genre,YearReleased,OnLoan,Borrower
-Simon and Garfunkel,"Parsley, Sage, Rosemary, and Thyme",Folk Rock,1966,0,
-Men At Work,Business As Usual,New Wave,1982,1,Natalie
+AlbumTitle,ArtistName,Genre,YearReleased,OnLoan,Borrower
+Bookends,Simon And Garfunkel,Folk Rock,1968,false,
+Business As Usual,Men At Work,New Wave,1982,true,Natalie
+So,Peter Gabriel,Progressive Pop,1986,false,
+Rubber Soul,The Beatles,Pop,1965,true,Mike
